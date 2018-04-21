@@ -3,6 +3,8 @@ import './App.css';
 import Header from './components/UI/Header/Header';
 import Footer from './components/UI/Footer/Footer';
 import MainPage from './components/UI/Body/MainPage/MainPage';
+import CreateVotePage from './components/UI/Body/CreateVotePage/CreateVotePage';
+import ExploreVotesPage from './components/UI/Body/ExploreVotesPage/ExploreVotesPage';
 
 //Imports for external libraries
 import { Link, Route } from 'react-router-dom';
@@ -24,6 +26,8 @@ class App extends Component {
       <div>
         <Header />
         <Route path="/" exact component={MainPage} />
+        <Route path="/create" component={CreateVotePage} />
+        <Route path="/explore" component={ExploreVotesPage} />
         <Route path="/hello" render={() => (<Button bsStyle="primary">Button</Button>)} />
         <Footer />
         

@@ -14,11 +14,11 @@ const header = () => {
 			<Navbar.Collapse>
 				<Nav>
 					<NavItem>
-						<Link to="/hello">Create</Link>
+						<Link to="/create">Create</Link>
 					</NavItem>
 
 					<NavItem>
-						<Link to="/hello">Explore</Link>
+						<Link to="/explore">Explore</Link>
 					</NavItem>
 				</Nav>
 				<Nav pullRight>
