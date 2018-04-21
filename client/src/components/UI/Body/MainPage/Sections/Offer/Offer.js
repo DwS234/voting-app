@@ -2,6 +2,8 @@ import React from 'react';
 
 import { Alert, FormGroup, FormControl, PageHeader} from 'react-bootstrap';
 
+import styles from './Offer.css';
+
 const offer = () => {
 	return (
 		<div>
@@ -9,12 +11,9 @@ const offer = () => {
 				Some features (for example creating a votings) require authentication
 			</Alert>
 			
-			<PageHeader style={{textAlign: 'center'}}>Log in to authenticate</PageHeader>
+			<PageHeader className={styles.PageHeader}>Log in to authenticate</PageHeader>
 
-			<div style={{
-				width: '50%',
-				margin: '0 auto'
-			}}>
+			<div className={styles.FormContainer}>
 				<form>
 					<FormGroup>
 						<FormControl type="text" placeholder="username" />

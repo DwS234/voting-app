@@ -8,7 +8,7 @@ import { Jumbotron, Well, Button } from 'react-bootstrap';
 const mainPage = () => {
 	return (
 		<div>
-			<Well style={{textAlign: 'center', margin: '0'}}>
+			<Well className={styles.MainPage}>
 				<h1>What would you like to do?</h1>
 				<Button bsStyle="primary" style={{marginRight: '20px'}}>Create voting</Button>
 				<Button bsStyle="warning">Explore votings</Button>
