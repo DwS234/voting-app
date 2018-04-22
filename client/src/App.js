@@ -9,6 +9,7 @@ import ExploreVotesPage from './components/UI/Body/ExploreVotesPage/ExploreVotes
 //Imports for external libraries
 import { Link, Route } from 'react-router-dom';
 import { Button } from 'react-bootstrap';
+import axios from 'axios';
 
 class App extends Component {
   state = {
@@ -16,9 +17,8 @@ class App extends Component {
   }
 
   componentDidMount() {
-    fetch("/api").then(res => res.json()).then(message => {
-      this.setState({message: message});
-    });
+
+   axios.post("/api/create", {}).then(res => console.log(res));
   }
 
   render() {
