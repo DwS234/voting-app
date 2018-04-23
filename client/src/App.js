@@ -18,7 +18,10 @@ class App extends Component {
 
   componentDidMount() {
 
-   axios.post("/api/create", {}).then(res => console.log(res));
+   axios.post("/api/create", {title: "fsdf", options: "fsdfd"}).then(res => console.log(res))
+   .catch(err => {
+    console.log("Something went wrong on client while trying to make a post request to create a vote: ", err);
+   });
   }
 
   render() {

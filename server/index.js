@@ -2,6 +2,7 @@ const express = require('express');
 const app = express();
 const mongoose = require('mongoose');
 const path = require('path');
+const bodyParser = require('body-parser');
 
 const VoteController = require('./controllers/Vote-controller');
 
@@ -11,6 +12,7 @@ mongoose.connect(process.env.MONGO_URI, err => {
 });
 
 app.use(express.static(path.join(__dirname, "client/build")));
+app.use(bodyParser.json());
 
 app.get("/api/getAll", (req, res) => {
 	var object = {
@@ -21,7 +23,8 @@ app.get("/api/getAll", (req, res) => {
 });
 
 app.post("/api/create", (req, res) => {
-	if(VoteController.createVoting("test", "test2"))
+	console.log(req.body);
+	if(VoteController.createVoting(req.body.title, req.body.options))
 		res.json("Voting has been created successfully");
 	else 
 		res.json("Something went wrong while creating Voting");
