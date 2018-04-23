@@ -20,7 +20,7 @@ class App extends Component {
 
    axios.post("/api/create", {title: "fsdf", options: "fsdfd"}).then(res => console.log(res))
    .catch(err => {
-    console.log("Something went wrong on client while trying to make a post request to create a vote: ", err);
+    console.log("Something went wrong on client while trying to make a post request to create a vote: ", err)
    });
   }
 
