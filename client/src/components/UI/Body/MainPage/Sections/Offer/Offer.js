@@ -18,7 +18,7 @@ class Offer extends React.Component {
 				
 				<PageHeader className={styles.PageHeader}>Log in to authenticate</PageHeader>
 				<div className={styles.FormContainer}>
-					<a href="./auth/twitter" class="btn btn-info"> <span gclass="fa fa-twitter"></span> Twitter</a>
+					<a href="./auth/twitter" class="btn btn-info"> <span class="fa fa-twitter"></span> Twitter</a>
 				</div>		
 			</div>
 		);
