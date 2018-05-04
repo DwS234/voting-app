@@ -5,6 +5,7 @@ import styles from './ExploreVotesPage.css';
 import VotesList from './Sections/VotesList/VotesList';
 
 class ExploreVotesPage extends React.Component {
+
 	render() {
 		return (
 			<div className={styles.ExploreVotesPage}>

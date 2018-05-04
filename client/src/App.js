@@ -1,42 +1,46 @@
 import React, { Component } from 'react';
-import './App.css';
+import styles from './App.css';
 import Header from './components/UI/Header/Header';
 import Footer from './components/UI/Footer/Footer';
 import MainPage from './components/UI/Body/MainPage/MainPage';
 import CreateVotePage from './components/UI/Body/CreateVotePage/CreateVotePage';
 import ExploreVotesPage from './components/UI/Body/ExploreVotesPage/ExploreVotesPage';
+import { connect } from 'react-redux';
+import * as actions from './store/actions/actions';
+import { withRouter } from 'react-router-dom';
+import axios from 'axios';
 
 //Imports for external libraries
 import { Link, Route } from 'react-router-dom';
 import { Button } from 'react-bootstrap';
-import axios from 'axios';
 
 class App extends Component {
-  state = {
-    message: ''
-  }
-
-  componentDidMount() {
-
-   axios.post("/api/create", {title: "fsdf", options: "fsdfd"}).then(res => console.log(res))
-   .catch(err => {
-    console.log("Something went wrong on client while trying to make a post request to create a vote: ", err)
-   });
+  componentWillMount() {
+    this.props.onFetchVotes();
   }
 
   render() {
     return (
       <div>
         <Header />
-        <Route path="/" exact component={MainPage} />
-        <Route path="/create" component={CreateVotePage} />
-        <Route path="/explore" component={ExploreVotesPage} />
-        <Route path="/hello" render={() => (<Button bsStyle="primary">Button</Button>)} />
-        <Footer />
+        <div className={styles.Content}>
+          <Route path="/" exact component={MainPage} />
+          <Route path="/create" component={CreateVotePage} />
+          <Route path="/explore" component={ExploreVotesPage} />
+          <Route path="/hello" render={() => (<Button bsStyle="primary">Button</Button>)} />
+        </div>
+        
+        <Footer className={styles.Footer}/>
         
       </div>
     );
   }
 }
 
-export default App;
+const mapDispatchToProps = dispatch => {
+  return {
+    onFetchVotes: () => dispatch(actions.fetchVotes())
+  }
+}
+
+export default withRouter(connect(null, mapDispatchToProps)(App));

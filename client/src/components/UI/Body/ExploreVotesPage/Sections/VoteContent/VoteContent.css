@@ -1,0 +1,8 @@
+.Option {
+	background-color: #eff0f2;
+	border: 1px solid gray;
+}
+
+.OptionWrapper {
+	margin-bottom: 20px;
+}
