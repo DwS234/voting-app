@@ -23,7 +23,7 @@ app.use(session({secret: process.env.SECRET, resave: false, saveUninitialized: f
 app.use(passport.initialize());
 app.use(passport.session());
 
-app.use(express.static(path.join(__dirname, "client/build")));
+app.use(express.static(path.resolve("client/build")));
 
 
 app.get("/api/getVotings", (req, res) => {
