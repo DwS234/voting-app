@@ -2,6 +2,10 @@ const express = require('express');
 const app = express();
 const mongoose = require('mongoose');
 const path = require('path');
+const bodyParser = require('body-parser');
+const passport = require('passport');
+const session = require('express-session');
+const cookieParser = require('cookie-parser');
 
 const VoteController = require('./controllers/Vote-controller');
 
@@ -10,26 +14,54 @@ mongoose.connect(process.env.MONGO_URI, err => {
 		console.log("Error while connecting to the database", err);
 });
 
-app.use(express.static(path.join(__dirname, "client/build")));
+require('./passport/passport.js')(passport);
 
-app.get("/api/getAll", (req, res) => {
-	var object = {
-		title: "gssdfd",
-		options: "fdsfasd"
-	}
-	res.json(object);
+app.use(cookieParser());
+app.use(bodyParser.urlencoded({ extended: true }));
+
+app.use(session({secret: process.env.SECRET, resave: false, saveUninitialized: false}));
+app.use(passport.initialize());
+app.use(passport.session());
+
+app.use(bodyParser.json());
+
+
+app.get("/api/getVotings", (req, res) => {
+	VoteController.getVotings().then(votings => {
+		res.json(votings);
+	});	
+});
+
+app.get("/auth/twitter", function(req, res, next){
+	console.log( "twitter login");
+	return passport.authenticate('twitter')(req, req, next);
+});
+
+app.post("/api/update", (req, res) => {
+	VoteController.updateVoting(req.body.updates, req.body.conditions).then(vote => {
+		console.log("req.body: " + JSON.stringify(req.body));
+		res.json(vote);
+	}).catch(err => {
+		res.json(err);
+	});
 });
 
 app.post("/api/create", (req, res) => {
-	if(VoteController.createVoting("test", "test2"))
-		res.json("Voting has been created successfully");
-	else 
-		res.json("Something went wrong while creating Voting");
+	console.log(req.body);
+	VoteController.createVoting(req.body.title, req.body.options).then(vote => {
+		res.json(vote);
+	}).catch(err => {
+		res.json(err);
+	});
+		
 });
+
+
+// app.use(express.static(path.resolve("client/build")));
 
 app.get("*", (req, res) => {
 	res.sendFile(path.resolve("client/build/index.html"));
-});
+ });
 
 const port = process.env.PORT || 5000;
 app.listen(port, () => {

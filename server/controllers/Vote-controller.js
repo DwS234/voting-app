@@ -2,13 +2,38 @@ const VoteModel = require("../models/Vote-model");
 
 module.exports = {
 	createVoting: function(title, options) {
-		var newVoting = new VoteModel({title, options});
-		newVoting.save(err => {
-			if(err) {
-				console.log("Error while saving new Voting", err);
-				return false;
-			}
+		return new Promise( (resolve, reject) => {
+			VoteModel.create({title, options}, (err, vote) => {
+				if(err)
+					reject(err);
+				else {
+					resolve(vote);
+				}
+			})
+		})
+	},
+	getVotings: function() {
+		return new Promise( (resolve, reject) => {
+			VoteModel.find({}, (err, votes) => {
+			if(err)
+			{
+				console.log("Error in Vote Controller: ", err);
+				reject(err);
+			} else {
+				resolve(votes);
+			}	
 		});
-		return true;
+		});
+	},
+	updateVoting: function(updates, conditions) {
+		return new Promise( (resolve, reject) => {
+			VoteModel.findOneAndUpdate(conditions, updates, {new: true}, (err, vote) => {
+				if(err)
+					reject(err);
+				else {
+					resolve(vote);
+				}
+			});
+		});
 	}
 }
