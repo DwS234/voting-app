@@ -23,7 +23,7 @@ app.use(session({secret: process.env.SECRET, resave: false, saveUninitialized: f
 app.use(passport.initialize());
 app.use(passport.session());
 
-app.use(express.static(path.resolve("client/build")));
+app.use(bodyParser.json());
 
 
 app.get("/api/getVotings", (req, res) => {
@@ -32,10 +32,14 @@ app.get("/api/getVotings", (req, res) => {
 	});	
 });
 
-app.get("/auth/twitter", passport.authenticate('twitter'));
+app.get("/auth/twitter", function(req, res, next){
+	console.log( "twitter login");
+	return passport.authenticate('twitter')(req, req, next);
+});
 
 app.post("/api/update", (req, res) => {
 	VoteController.updateVoting(req.body.updates, req.body.conditions).then(vote => {
+		console.log("req.body: " + JSON.stringify(req.body));
 		res.json(vote);
 	}).catch(err => {
 		res.json(err);
@@ -52,6 +56,8 @@ app.post("/api/create", (req, res) => {
 		
 });
 
+
+// app.use(express.static(path.resolve("client/build")));
 
 app.get("*", (req, res) => {
 	res.sendFile(path.resolve("client/build/index.html"));

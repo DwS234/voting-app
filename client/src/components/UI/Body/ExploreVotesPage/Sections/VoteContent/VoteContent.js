@@ -18,7 +18,7 @@ class VoteContent extends React.Component {
 	};
 
 	componentWillMount() {
-		console.log(this.props.options);
+		console.log("Options available: " + JSON.stringify(this.props.options));
 		this.setState({
 			options: this.props.options
 		});
@@ -26,7 +26,9 @@ class VoteContent extends React.Component {
 
 	onVotedHandler = (e) => {
 		e.preventDefault();
-
+		console.log("Inside onVotedHandler");
+		console.log("----------------");
+		console.log("Title of voting: " + this.props.title);
 
 		axios.post("/api/update", {conditions: {
 			title: this.props.title
@@ -40,6 +42,7 @@ class VoteContent extends React.Component {
 				return option;
 			})
 		}}).then(res => {
+			console.log("Data after update: " + JSON.stringify(res.data));
 			this.props.onUpdateVote(res.data);
 		}).catch(err => {
 			console.log(err);

@@ -17,6 +17,7 @@ import { Button } from 'react-bootstrap';
 class App extends Component {
   componentWillMount() {
     this.props.onFetchVotes();
+    axios.get("/api/getVotings").then(res => console.log(res)).catch(err => console.log(err));
   }
 
   render() {
